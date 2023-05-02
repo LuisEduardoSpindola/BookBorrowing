@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BookBorrowing.DATA.Models.Book>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<div class="align-content-between">
+    <h2 class="text-white w-30 p-1">Lista de Livros Cadastrados</h2>
+    <a asp-action="Create" class="btn btn-outline-primary p-1">Adicionar</a>
+</div>
+
+<table class="table text-white">
+    <thead>
+        <tr class="align-content-between">
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublisherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookImg)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr class="fs-5 align-middle">
+            <td>
+                @Html.DisplayFor(modelItem => item.BookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublisherName)
+            </td>
+                <td>
+                    <img src="@Html.DisplayFor(modelItem => item.BookImg)" width="70" height="70">
+                </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.IdBook">Editar</a> |
+                    <a asp-action="Details" class="btn btn-outline-primary" asp-route-id="@item.IdBook">Detalhes</a> |
+                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.IdBook">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

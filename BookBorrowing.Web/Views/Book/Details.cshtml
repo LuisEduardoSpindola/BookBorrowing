@@ -1,0 +1,44 @@
+﻿@model BookBorrowing.DATA.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="text-center">
+    <dl class="row">
+        <dd class = "p-1">
+            <img src="@Html.DisplayFor(model => model.BookImg)" width="170" height="170" style="border-radius:50%">
+        </dd>
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.BookName) : @Html.DisplayFor(model => model.BookName)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.AuthorName) : @Html.DisplayFor(model => model.AuthorName)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.PublisherName) : @Html.DisplayFor(model => model.PublisherName)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.PublishDate) : @Html.DisplayFor(model => model.PublishDate)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.BookEdition) : @Html.DisplayFor(model => model.BookEdition)</h3>
+        </dd>
+        
+    </dl>
+</div>
+<div class="position-absolute start-50 top-70 translate-middle">
+    <a asp-action="Edit" asp-route-id="@Model?.IdBook" class="btn btn-outline-warning">Editar</a> |
+    <a asp-action="List" class="btn btn-outline-primary">Voltar</a>
+</div>
+
+

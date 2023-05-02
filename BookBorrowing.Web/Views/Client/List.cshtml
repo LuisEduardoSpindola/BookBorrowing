@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BookBorrowing.DATA.Models.Client>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<div class="align-content-between">
+    <h2 class="text-white w-30 p-1">Lista de Clientes Cadastrados</h2>
+    <a asp-action="Create" class="btn btn-outline-primary p-1">Adicionar</a>
+</div>
+
+<table class="table text-white">
+    <thead>
+        <tr class="align-content-between">
+            <th>
+                @Html.DisplayNameFor(model => model.ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientCpf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CellNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr class="fs-5 align-middle">
+                <td>
+                        @Html.DisplayFor(modelItem => item.ClientName)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.ClientCpf)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.CellNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CellNumber)
+                </td>
+            <td>
+                <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.IdClient">Editar</a> |
+                    <a asp-action="Details" class="btn btn-outline-primary" asp-route-id="@item.IdClient">Detalhes</a> |
+                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.IdClient">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
