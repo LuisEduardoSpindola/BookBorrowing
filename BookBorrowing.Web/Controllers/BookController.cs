@@ -6,7 +6,7 @@ namespace BookBorrowing.Web.Controllers
 {
     public class BookController : Controller
     {
-        BookService _BookService = new BookService();
+        BookService _BookService = new BookService(); 
         
 
         //Create
