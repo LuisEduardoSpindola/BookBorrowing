@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace BookBorrowing.DATA.Interfaces
 {
-    public interface IRepositoryModel<Entity> where Entity : class
+    public interface IRepositoryModel<T> where T : class
     {
-        Entity Create(Entity entity);
-        List<Entity> GetAll();
-        Entity GetById(params object[] id);
-        Entity Update(Entity entity);
-        void Delete(Entity entity);
+        T Create(T entity);
+        List<T> GetAll();
+        T GetById(params object[] id);
+        T Update(T entity);
+        void Delete(T entity);
         void DeleteById(params object[] id);
-        void SaveChanges(Entity entity);
+        void SaveChanges(T entity);
     }
 }

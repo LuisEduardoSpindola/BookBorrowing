@@ -1,60 +1,87 @@
 ﻿using BookBorrowing.DATA.Models;
 using BookBorrowing.DATA.Service;
+using BookBorrowing.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookBorrowing.Web.Controllers
 {
     public class BorrowingController : Controller
     {
+        private ViewBorrowingService _BorrowingService = new ViewBorrowingService();
+        
 
-        BorrowingService _BorrowingService = new BorrowingService();
 
         //Create
-        public IActionResult Create()
+        public IActionResult Create() 
         {
-            return View();
+            BorrowingViewModel _BorrowingViewModel = new BorrowingViewModel();
+            List<Book> _BookList = _BorrowingService._RepositoryBook.GetAll();
+            List<Client> _ClientList = _BorrowingService._RepositoryClient.GetAll();
+
+
+            _BorrowingViewModel._ClientList = _ClientList;
+            _BorrowingViewModel._BookList = _BookList;
+
+            _BorrowingViewModel._Borrowing = new Borrowing();
+            _BorrowingViewModel._Borrowing.BorrowingDate = DateTime.Now;
+            _BorrowingViewModel._Borrowing.DevolutionDate = DateTime.Now.AddDays(7);
+
+            return View(_BorrowingViewModel);
         }
 
+
         [HttpPost]
-        public IActionResult Create(Borrowing BorrowingAttribute)
+        public IActionResult Create(Borrowing _Borrowing) 
         {
-            Borrowing _BorrowingAttribute = _BorrowingService._RepositoryBorrowing.Create(BorrowingAttribute);
+            _BorrowingService._RepositoryBorrowing.Create(_Borrowing);
+
+            if(!ModelState.IsValid) 
+            {
+                return View();
+            }
+
             return RedirectToAction("List");
         }
 
-        //List
+
+        // List
         public IActionResult List()
         {
-            List<Borrowing> _BorrowingList = _BorrowingService._RepositoryBorrowing.GetAll();
-            return View(_BorrowingList);
+            List<ViewBorrowing> listViewBorrowing = _BorrowingService._RepositoryViewBorrowing.GetAll();
+            return View(listViewBorrowing);
         }
 
-        //Update
-        public ActionResult Edit(int id)
+        // Update
+
+        public IActionResult Edit(int id)
         {
-            Borrowing _BorrowingEdit = _BorrowingService._RepositoryBorrowing.GetById(id);
-            return View(_BorrowingEdit);
+            Borrowing _Borrowing = new Borrowing();
+            BorrowingViewModel _BorrowingViewModel = new BorrowingViewModel();
+
+            _BorrowingViewModel._BookList = _BorrowingService._RepositoryBook.GetAll();
+            _BorrowingViewModel._ClientList = _BorrowingService._RepositoryClient.GetAll();
+
+            _Borrowing = _BorrowingService._RepositoryBorrowing.GetById(id);
+            _BorrowingViewModel._Borrowing = _Borrowing;
+
+            return View(_BorrowingViewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(Borrowing BorrowingInput)
+        public IActionResult Edit(BorrowingViewModel _BorrowingViewModel)
         {
-            _BorrowingService._RepositoryBorrowing.Update(BorrowingInput);
-            return RedirectToAction("List", new { });
-        }
+            _BorrowingService._RepositoryBorrowing.Update(_BorrowingViewModel._Borrowing);
 
-        //Delete
-        public IActionResult Delete(int id)
-        {
-            _BorrowingService._RepositoryBorrowing.DeleteById(id);
+            if (!ModelState.IsValid)
+            {
+                _BorrowingViewModel._BookList = _BorrowingService._RepositoryBook.GetAll();
+                _BorrowingViewModel._ClientList = _BorrowingService._RepositoryClient.GetAll();
+                return View(_BorrowingViewModel);
+            }
+
             return RedirectToAction("List");
         }
 
-        //Details
-        public IActionResult Details(int id)
-        {
-            Borrowing BorrowingDetails = _BorrowingService._RepositoryBorrowing.GetById(id);
-            return View(BorrowingDetails);
-        }
+
     }
 }

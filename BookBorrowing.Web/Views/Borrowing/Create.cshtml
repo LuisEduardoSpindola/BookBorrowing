@@ -1,0 +1,197 @@
+﻿@model BorrowingViewModel;
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-white">Adicionar Emprestimo</h1>
+
+<div>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div hidden class="form-group">
+                <input hidden id="idClient" asp-for="_Borrowing.IdBorrowingClient" class="form-control" />
+            </div>
+
+            <div hidden class="form-group">
+                <input hidden id="idBook" asp-for="_Borrowing.IdBorrowingBook" class="form-control" />
+            </div>
+
+            <div class="card bg-dark">
+                <div class="card-header">Clientes</div>
+                <div class="card-body">
+                    <table id="ClientTable" class="table text-white">
+                        <thead>
+                            <tr class="align-content-between">
+                                <th>
+                                    @Html.DisplayNameFor(model => model._Client.ClientName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model._Client.ClientCpf)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model._Client.CellNumber)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._ClientList)
+                            {
+                                <tr onclick="passIdClient('@item.IdClient')">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClientName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ClientCpf)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CellNumber)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br></br>
+
+            <div class="card bg-dark">
+                <div class="card-header">Livros</div>
+                <div class="card-body">
+                    <table id="BookTable" class="table text-white">
+                        <thead>
+                            <tr class="align-content-between">
+                                <th>
+                                    @Html.DisplayNameFor(model => model._Book.BookName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model._Book.AuthorName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model._Book.PublisherName)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model._BookList)
+                            {
+                                <tr onclick="passIdBook('@item.IdBook')">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BookName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AuthorName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PublisherName)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br></br>
+
+            <div class="card bg-dark">
+                <div class="card-header">Datas</div>
+                <div class="card-body row">
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label asp-for="_Borrowing.BorrowingDate" class="control-label"></label>
+                            <input readonly asp-for="_Borrowing.BorrowingDate" class="form-control" />
+                            <span asp-validation-for="_Borrowing.BorrowingDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-group">
+                            <label asp-for="_Borrowing.DevolutionDate" class="control-label"></label>
+                            <input readonly asp-for="_Borrowing.DevolutionDate" class="form-control" />
+                            <span asp-validation-for="_Borrowing.DevolutionDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br></br>
+            <div class="form-group mt-4">
+                <input type="submit" value="Create" class="btn btn-outline-primary w-25" /> | <a asp-action="List" class="btn btn-outline-primary w-25">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+        let ClientTable = new DataTable('#ClientTable', {
+            "language":
+            {
+                "lengthMenu": "Mostrar  _MENU_  por página",
+                "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+            }
+        });
+
+        let BookTable = new DataTable('#BookTable ', {
+            "language":
+            {
+                "lengthMenu": "Mostrar  _MENU_  por página",
+                "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+            }
+        });
+
+        // Client
+
+        $(document).ready(function () {
+            let ClientTable = $('#ClientTable').DataTable();
+
+            $('#ClientTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    ClientTable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+        });
+
+        // Book
+
+        $(document).ready(function () {
+            let BookTable = $('#BookTable').DataTable();
+
+            $('#BookTable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    BookTable.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+        });
+
+        function passIdClient(idClient) 
+        {
+            document.getElementById('idClient').value = idClient 
+        }
+
+        function passIdBook(idBook) 
+        {
+            document.getElementById('idBook').value = idBook
+        }
+    </script>
+    }
+
+
+

@@ -21,13 +21,14 @@ namespace BookBorrowing.DATA.Models
         public virtual DbSet<Book> Book { get; set; }
         public virtual DbSet<Borrowing> Borrowing { get; set; }
         public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<ViewBorrowing> ViewBorrowing { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-IH3INBQ\\SQL_SERVER_2023;Initial Catalog=BookBorrowing;User ID=sa;Password=admin123; TrustServerCertificate=true");
+                optionsBuilder.UseSqlServer("Data Source=LUIS_EDUARDO;Initial Catalog=BookBorrowing;Persist Security Info=True;User ID=sa;Password=admin123; TrustServerCertificate=True");
             }
         }
 
@@ -35,6 +36,9 @@ namespace BookBorrowing.DATA.Models
         {
             modelBuilder.Entity<Book>(entity =>
             {
+                entity.HasKey(e => e.IdBook)
+                    .HasName("PK_Book_1");
+
                 entity.Property(e => e.AuthorName).IsFixedLength();
 
                 entity.Property(e => e.BookEdition).IsFixedLength();
@@ -46,28 +50,31 @@ namespace BookBorrowing.DATA.Models
 
             modelBuilder.Entity<Borrowing>(entity =>
             {
-                entity.Property(e => e.BorrowingAdress).IsFixedLength();
-
-                entity.HasOne(d => d.IdBookNavigation)
-                    .WithMany(p => p.Borrowing)
-                    .HasForeignKey(d => d.IdBook)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Borrowing_Book");
-
-                entity.HasOne(d => d.IdClientNavigation)
-                    .WithMany(p => p.Borrowing)
-                    .HasForeignKey(d => d.IdClient)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Borrowing_Client");
+                entity.HasKey(e => e.IdBorrowing)
+                    .HasName("PK_Borrowing_1");
             });
 
             modelBuilder.Entity<Client>(entity =>
             {
+                entity.HasKey(e => e.IdClient)
+                    .HasName("PK_Client_1");
+
                 entity.Property(e => e.Adress).IsFixedLength();
 
                 entity.Property(e => e.CellNumber).IsFixedLength();
 
                 entity.Property(e => e.City).IsFixedLength();
+
+                entity.Property(e => e.ClientCpf).IsFixedLength();
+
+                entity.Property(e => e.ClientName).IsFixedLength();
+            });
+
+            modelBuilder.Entity<ViewBorrowing>(entity =>
+            {
+                entity.ToView("ViewBorrowing");
+
+                entity.Property(e => e.BookName).IsFixedLength();
 
                 entity.Property(e => e.ClientCpf).IsFixedLength();
 

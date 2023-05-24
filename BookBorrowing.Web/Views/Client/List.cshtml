@@ -5,11 +5,11 @@
 }
 
 <div class="align-content-between">
-    <h2 class="text-white w-30 p-1">Lista de Clientes Cadastrados</h2>
-    <a asp-action="Create" class="btn btn-outline-primary p-1">Adicionar</a>
+    <h2 class="text-white w-30 p-1">Lista de Clientes &nbsp; <a asp-action="Create" class="btn btn-outline-primary p-7">Adicionar</a></h2>
+    <br></br>
 </div>
 
-<table class="table text-white">
+<table id="ClientTable" class="table text-white">
     <thead>
         <tr class="align-content-between">
             <th>
@@ -20,6 +20,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CellNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adress)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.City)
@@ -40,14 +43,32 @@
                         @Html.DisplayFor(modelItem => item.CellNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CellNumber)
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
                 </td>
             <td>
                 <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.IdClient">Editar</a> |
-                    <a asp-action="Details" class="btn btn-outline-primary" asp-route-id="@item.IdClient">Detalhes</a> |
-                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.IdClient">Deletar</a>
+                <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.IdClient">Deletar</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+@section Scripts
+    {
+    <script>
+
+        let ClientTable = new DataTable('#ClientTable', {
+            "language":
+            {
+                "lengthMenu": "Mostrar  _MENU_  por página",
+                "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+            }
+        });
+
+    </script>
+    }

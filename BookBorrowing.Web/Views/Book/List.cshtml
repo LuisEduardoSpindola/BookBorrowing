@@ -5,11 +5,13 @@
 }
 
 <div class="align-content-between">
-    <h2 class="text-white w-30 p-1">Lista de Livros Cadastrados</h2>
-    <a asp-action="Create" class="btn btn-outline-primary p-1">Adicionar</a>
+    <h2 class="text-white w-30 p-1">Emprestimos &nbsp; <a asp-action="Create" class="btn btn-outline-primary p-7">Adicionar</a></h2>
+    <br></br>
 </div>
 
-<table class="table text-white">
+
+<table id="ClientTable" class="table text-white">
+   
     <thead>
         <tr class="align-content-between">
             <th>
@@ -19,7 +21,7 @@
                 @Html.DisplayNameFor(model => model.AuthorName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PublisherName)
+                @Html.DisplayNameFor(model => model.PublisherName) 
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookImg)
@@ -51,3 +53,18 @@
 }
     </tbody>
 </table>
+
+@section Scripts
+    {
+    <script>
+
+        let ClientTable = new DataTable('#ClientTable', {
+            "language":
+            {
+                "lengthMenu": "Mostrar  _MENU_  por página",
+                "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+            }
+        });
+
+    </script>
+    }

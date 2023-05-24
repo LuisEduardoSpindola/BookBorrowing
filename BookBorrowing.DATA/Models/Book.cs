@@ -10,47 +10,27 @@ namespace BookBorrowing.DATA.Models
 {
     public partial class Book
     {
-        public Book()
-        {
-            Borrowing = new HashSet<Borrowing>();
-        }
-
         [Key]
         [Column("idBook")]
         public int IdBook { get; set; }
-
-        [Required]
         [Column("bookName")]
         [StringLength(100)]
-        [Display(Name = "Nome")]
         public string BookName { get; set; }
-
-        [Required]
         [Column("authorName")]
         [StringLength(150)]
-        [Display(Name = "Autor")]
         public string AuthorName { get; set; }
-
+        [Required]
         [Column("publisherName")]
-        [StringLength(150)]
-        [Display(Name = "Editora")]
+        [StringLength(10)]
         public string PublisherName { get; set; }
-
-        [Column("publishDate", TypeName = "date")]
-        [Display(Name = "Data")]
-        public DateTime PublishDate { get; set; }
-
+        [Column("publisherDate", TypeName = "date")]
+        public DateTime? PublisherDate { get; set; }
         [Column("bookEdition")]
-        [StringLength(50)]
-        [Display(Name = "Edição")]
+        [StringLength(30)]
+        [Unicode(false)]
         public string BookEdition { get; set; }
-
         [Column("bookImg")]
         [Unicode(false)]
-        [Display(Name = "Imagem")]
         public string BookImg { get; set; }
-
-        [InverseProperty("IdBookNavigation")]
-        public virtual ICollection<Borrowing> Borrowing { get; set; }
     }
 }

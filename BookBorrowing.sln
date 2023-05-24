@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookBorrowing.DATA", "BookBorrowing.DATA\BookBorrowing.DATA.csproj", "{74BFA525-EF93-4D82-ACAC-14DD7D5C025A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookBorrowing.DATA", "BookBorrowing.DATA\BookBorrowing.DATA.csproj", "{74BFA525-EF93-4D82-ACAC-14DD7D5C025A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookBorrowing.Web", "BookBorrowing.Web\BookBorrowing.Web.csproj", "{20F8C8F4-2E95-44CA-A524-CD62F9238719}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookBorrowing.Web", "BookBorrowing.Web\BookBorrowing.Web.csproj", "{DE1415D6-2273-4076-821C-2965EBFE513D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{74BFA525-EF93-4D82-ACAC-14DD7D5C025A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74BFA525-EF93-4D82-ACAC-14DD7D5C025A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74BFA525-EF93-4D82-ACAC-14DD7D5C025A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20F8C8F4-2E95-44CA-A524-CD62F9238719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20F8C8F4-2E95-44CA-A524-CD62F9238719}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20F8C8F4-2E95-44CA-A524-CD62F9238719}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20F8C8F4-2E95-44CA-A524-CD62F9238719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE1415D6-2273-4076-821C-2965EBFE513D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE1415D6-2273-4076-821C-2965EBFE513D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE1415D6-2273-4076-821C-2965EBFE513D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE1415D6-2273-4076-821C-2965EBFE513D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

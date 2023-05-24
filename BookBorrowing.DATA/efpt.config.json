@@ -25,9 +25,13 @@
       {
          "Name": "[dbo].[Client]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ViewBorrowing]",
+         "ObjectType": 3
       }
    ],
-   "UiHint": "desktop-ih3inbq\\sql_server_2023.BookBorrowing.dbo",
+   "UiHint": "luis_eduardo.BookBorrowing.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,

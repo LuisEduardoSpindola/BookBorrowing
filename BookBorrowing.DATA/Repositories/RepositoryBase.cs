@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookBorrowing.DATA.Repositories
 {
-    public class RepositoryBase<Entity> : IDisposable ,IRepositoryModel<Entity> where Entity : class
+    public class RepositoryBase<T> : IDisposable ,IRepositoryModel<T> where T : class
     {
         private BookBorrowingContext _Context;
         public bool _SaveChanges = true;
@@ -22,9 +22,9 @@ namespace BookBorrowing.DATA.Repositories
 
         //Create
 
-        public Entity Create(Entity entity)
+        public T Create(T entity)
         {
-            _Context.Set<Entity>().Add(entity);
+            _Context.Set<T>().Add(entity);
         
             if(_SaveChanges) 
             {
@@ -36,20 +36,20 @@ namespace BookBorrowing.DATA.Repositories
 
         // Read
 
-        public List<Entity> GetAll()
+        public List<T> GetAll()
         {
-            return _Context.Set<Entity>().ToList();
+            return _Context.Set<T>().ToList();
         }
 
-        public Entity GetById(params object[] id)
+        public T GetById(params object[] id)
         {
-            return _Context.Set<Entity>().Find(id);
+            return _Context.Set<T>().Find(id);
         }
 
         // Update
 
 
-        public Entity Update(Entity entity)
+        public T Update(T entity)
         {
             _Context.Entry(entity).State = EntityState.Modified;
 
@@ -64,9 +64,9 @@ namespace BookBorrowing.DATA.Repositories
         // Delete
 
 
-        public void Delete(Entity entity)
+        public void Delete(T entity)
         {
-            _Context.Set<Entity>().Remove(entity);
+            _Context.Set<T>().Remove(entity);
 
             if (_SaveChanges)
             {
@@ -88,7 +88,7 @@ namespace BookBorrowing.DATA.Repositories
         }
 
 
-        public void SaveChanges(Entity entity)
+        public void SaveChanges(T entity)
         {
             _Context.SaveChanges();
         }

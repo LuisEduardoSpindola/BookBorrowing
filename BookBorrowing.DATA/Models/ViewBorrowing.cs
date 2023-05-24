@@ -8,10 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookBorrowing.DATA.Models
 {
-    public partial class Borrowing
+    [Keyless]
+    public partial class ViewBorrowing 
     {
-        [Key]
+        [Required]
+        [Column("clientName")]
+        [StringLength(150)]
+        public string ClientName { get; set; }
+        [Required]
+        [Column("clientCPF")]
+        [StringLength(14)]
+        public string ClientCpf { get; set; }
+        [Column("bookName")]
+        [StringLength(100)]
+        public string BookName { get; set; }
         [Column("idBorrowing")]
+        public int Id { get; set; }
         public int IdBorrowing { get; set; }
         [Column("idBorrowingClient")]
         public int IdBorrowingClient { get; set; }
