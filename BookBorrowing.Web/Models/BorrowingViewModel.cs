@@ -5,6 +5,7 @@ namespace BookBorrowing.Web.Models
     public class BorrowingViewModel
     {
         public Book _Book { get; set; }
+
         public Client _Client { get; set; }
 
         public Borrowing _Borrowing { get; set; }
@@ -16,3 +17,4 @@ namespace BookBorrowing.Web.Models
         public ViewBorrowing _ViewBorrowing { get; set; }
     }
 }
+    

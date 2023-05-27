@@ -10,7 +10,6 @@ namespace BookBorrowing.Web.Controllers
         private ViewBorrowingService _BorrowingService = new ViewBorrowingService();
         
 
-
         //Create
         public IActionResult Create() 
         {
@@ -81,6 +80,34 @@ namespace BookBorrowing.Web.Controllers
 
             return RedirectToAction("List");
         }
+
+        // Delete 
+
+        public IActionResult Delete(int id) 
+        {
+            _BorrowingService._RepositoryBorrowing.DeleteById(id);
+            return RedirectToAction("List");
+        }
+
+        // Details  
+
+        public IActionResult Details(int id)
+        {
+            Borrowing _Borrowing = _BorrowingService._RepositoryBorrowing.GetById(id);
+            BorrowingViewModel _BorrowingViewModel = new BorrowingViewModel();
+            _BorrowingViewModel._Borrowing = _Borrowing;
+
+            // Buscar o cliente pelo ID do empréstimo
+            Client _Client = _BorrowingService._RepositoryClient.GetById(_Borrowing.IdBorrowingClient);
+            _BorrowingViewModel._Client = _Client;
+
+            // Buscar o livro pelo ID do empréstimo
+            Book _Book = _BorrowingService._RepositoryBook.GetById(_Borrowing.IdBorrowingBook);
+            _BorrowingViewModel._Book = _Book;
+
+            return View(_BorrowingViewModel);
+        }
+
 
 
     }

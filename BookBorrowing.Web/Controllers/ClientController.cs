@@ -64,7 +64,7 @@ namespace BookBorrowing.Web.Controllers
         public IActionResult Details(int id) 
         {
             Client _ClientDetails = _ClientService._RepositoryClient.GetById(id);
-            return View(_ClientDetails);
+            return View(_ClientDetails); 
         }
     }
 }

@@ -1,0 +1,111 @@
+﻿@model BookBorrowing.Web.Models.BorrowingViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div class="text-white">
+    <dl class="row">
+        <div class="card bg-dark">
+            <div class="card-header">Detalhes do Emprestimo</div>
+                <div class="card-body">
+                <dd class="col-sm-2">
+                    @Html.DisplayNameFor(model => model._Borrowing.BorrowingDate)
+                </dd>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model._Borrowing.BorrowingDate) 
+                </dd>
+                <dd class="col-sm-2">
+                    @Html.DisplayNameFor(model => model._Borrowing.DevolutionDate)
+                </dd>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model._Borrowing.DevolutionDate)
+                </dd>
+                <dd class="col-sm-2">
+                    @Html.DisplayNameFor(model => model._Borrowing.Returned)
+                </dd>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model._Borrowing.Returned)
+                </dd>
+            </div>
+        </div>
+    </dl>
+    
+    <hr />
+    <dl class="row">
+        <div class="card bg-dark">
+            <div class="card-header">Detalhes do Cliente</div>
+            <div class="card-body">
+                <dd class="col-sm-2">
+                    <p>@Html.DisplayNameFor(model => model._Client.ClientName) : @Html.DisplayFor(model => model._Client.ClientName)</p>
+                </dd>
+                <dd class="col-sm-10">
+                    <p>@Html.DisplayNameFor(model => model._Client.ClientCpf) : @Html.DisplayFor(model => model._Client.ClientCpf)</p>
+                </dd>
+                <dd class="col-sm-2">
+                    <p>@Html.DisplayNameFor(model => model._Client.Adress) : @Html.DisplayFor(model => model._Client.Adress)</p>
+                </dd>
+                <dd class="col-sm-10">
+                    <p>@Html.DisplayNameFor(model => model._Client.CellNumber) : @Html.DisplayFor(model => model._Client.CellNumber)</p>
+                </dd>
+                <dd class="col-sm-2">
+                    <p>@Html.DisplayNameFor(model => model._Client.City) : @Html.DisplayFor(model => model._Client.City)</p>
+                </dd>
+            </div>
+        </div>
+    </dl>
+
+    <hr />
+    <dl class="row">
+        <div class="card bg-dark">
+            <div class="card-header">Detalhes do Livro</div>
+            <div class="card-body">
+                <dd class="p-1">
+                    <img src="@Html.DisplayFor(model => model._Book.BookImg)" width="70" height="70" style="border-radius:50%">
+                </dd>
+                <dd class="col-sm-2">
+                    <p>@Html.DisplayNameFor(model => model._Book.BookName) : @Html.DisplayFor(model => model._Book.BookName)</p>
+                </dd>
+                <dd class="col-sm-10">
+                    <p>@Html.DisplayNameFor(model => model._Book.AuthorName) : @Html.DisplayFor(model => model._Book.AuthorName)</p>
+                </dd>
+                <dd class="col-sm-2">
+                    <p>@Html.DisplayNameFor(model => model._Book.BookEdition) : @Html.DisplayFor(model => model._Book.BookEdition)</p>
+                </dd>
+                <dd class="col-sm-10">
+                    <p>@Html.DisplayNameFor(model => model._Book.PublisherName) : @Html.DisplayFor(model => model._Book.PublisherName)</p>
+                </dd>
+            </div>
+        </div>
+    </dl>
+</div>
+
+
+
+      
+<div>
+    <a asp-action="Edit" asp-route-id="@Model._Borrowing.IdBorrowing">Edit</a> |
+    <a asp-action="Index">Voltar</a>
+</div>
+
+
+
+
+
+
+
+        
+@*        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model._Borrowing.IdBorrowingBook)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdBorrowingClient)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdBorrowingBook)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdBorrowingBook)
+        </dd>*@

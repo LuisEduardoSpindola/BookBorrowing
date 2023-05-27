@@ -1,0 +1,43 @@
+﻿@model BookBorrowing.DATA.Models.Client
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="p-2 text-white">Detalhes do Cliente</h2>
+<hr />
+
+<div class="text-center text-white mt-5">
+    <dl class="row">
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.ClientName) : @Html.DisplayFor(model => model.ClientName)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.ClientCpf) : @Html.DisplayFor(model => model.ClientCpf)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.Adress) : @Html.DisplayFor(model => model.Adress)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.City) : @Html.DisplayFor(model => model.City)</h3>
+        </dd>
+        
+
+        <dd class="p-1">
+            <h3 class="fw-light">@Html.DisplayNameFor(model => model.CellNumber) : @Html.DisplayFor(model => model.CellNumber)</h3>
+        </dd>
+        
+    </dl>
+</div>
+<div class="position-absolute start-50 top-70 translate-middle">
+    <a asp-action="Edit" asp-route-id="@Model?.IdClient" class="btn btn-outline-warning">Editar</a> |
+    <a asp-action="List" class="btn btn-outline-primary">Voltar</a>
+</div>
+
+

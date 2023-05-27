@@ -13,14 +13,19 @@ namespace BookBorrowing.DATA.Models
         [Key]
         [Column("idBorrowing")]
         public int IdBorrowing { get; set; }
+
         [Column("idBorrowingClient")]
         public int IdBorrowingClient { get; set; }
+
         [Column("idBorrowingBook")]
         public int IdBorrowingBook { get; set; }
+
         [Column("borrowingDate", TypeName = "datetime")]
         public DateTime BorrowingDate { get; set; }
+
         [Column("devolutionDate", TypeName = "datetime")]
         public DateTime DevolutionDate { get; set; }
+
         [Column("returned")]
         public bool Returned { get; set; }
     }
