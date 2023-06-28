@@ -5,7 +5,7 @@
 }
 
 
-<div class="main">
+<div class="main border border-primary gradient-border" id="box">
 
 
     <div class="inner text-center">
@@ -28,11 +28,13 @@
             </g>
         </svg>
     </div>
+    <div class="content flex">
+        <h3 class="space"><a href="https://www.linkedin.com/in/lu%C3%ADs-eduardo-spindola-64ba12223/">Developer</a> | <a href="https://github.com/LuisEduardoSpindola">GitHub</a></h3>
+    </div>
+
 </div>
 
-<div class="content flex">
-    <h3 class="space"><a href="Identity/Account/Login">Login</a> | <a href="/Identity/Account/Register">Cadastrar-se</a></h3>
-</div>
+
 
 
 <style>
@@ -54,16 +56,16 @@
         color: #333333;
     }
 
-    .space 
-    {
-        color : lightseagreen;
+    .space {
+        color: #649ebe;
     }
 
     .main {
         position: relative;
         text-align: center;
-        background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+        background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgb(39, 4, 136) 100%);
         color: white;
+        width: 100%;
     }
 
     .logo {
@@ -74,7 +76,7 @@
         vertical-align: middle;
     }
 
-    .inner{
+    .inner {
         height: 50vh;
         width: 100%;
         margin: 0;
@@ -91,7 +93,7 @@
     .waves {
         position: relative;
         width: 100%;
-        height: 15vh;
+        height: 20vh;
         margin-bottom: -7px; /*Fix for safari gap*/
         min-height: 100px;
         max-height: 150px;
@@ -131,16 +133,13 @@
         }
 
     @@keyframes move-forever {
-        0%
+        0% {
+            transform: translate3d(-90px,0,0);
+        }
 
-    {
-        transform: translate3d(-90px,0,0);
-    }
-
-    100% {
-        transform: translate3d(85px,0,0);
-    }
-
+        100% {
+            transform: translate3d(85px,0,0);
+        }
     }
     /*Shrinking for mobile*/
     media (max-width: 768px) {
@@ -152,7 +151,7 @@
     }
 
     .content {
-        height: 30vh;
+        height: 40vh;
     }
 
     h1 {
@@ -160,4 +159,44 @@
     }
 
     }
+
+
+    /*Card*/
+
+
+    .gradient-border {
+        --borderWidth: 3px;
+        position: relative;
+        border-radius: var(--borderWidth);
+    }
+
+        .gradient-border:after {
+            content: '';
+            position: absolute;
+            top: calc(-1 * var(--borderWidth));
+            left: calc(-1 * var(--borderWidth));
+            height: calc(100% + var(--borderWidth) * 2);
+            width: calc(100% + var(--borderWidth) * 2);
+            background: linear-gradient(60deg, #7eb5d6, #649ebe, #4a87a6, #2f708e, #155976, #1098ad, #07b39b, #2f708e);
+            border-radius: calc(2 * var(--borderWidth));
+            z-index: -1;
+            animation: animatedgradient 3s ease alternate infinite;
+            background-size: 300% 300%;
+        }
+
+
+    @@keyframes animatedgradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
 </style>

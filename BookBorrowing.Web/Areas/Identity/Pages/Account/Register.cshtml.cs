@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using BookBorrowing.Web.Constants;
+using Azure.Core;
 
 namespace BookBorrowing.Web.Areas.Identity.Pages.Account
 {
@@ -30,20 +32,27 @@ namespace BookBorrowing.Web.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<Library> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+
 
         public RegisterModel(
             UserManager<Library> userManager,
             IUserStore<Library> userStore,
             SignInManager<Library> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager
+            )
         {
+            
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -112,6 +121,10 @@ namespace BookBorrowing.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -139,8 +152,18 @@ namespace BookBorrowing.Web.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirmar Email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    //-------------------atribuir role ao user------------------------------
+                    var applicationRole = await _roleManager.FindByNameAsync(Roles.Library);
+
+                    //var Identityuser = userManager.FindByNameAsync(request.UserName).Result;
+                    if (applicationRole != null)
+                    {
+                        IdentityResult roleResult = await _userManager.AddToRoleAsync(user, applicationRole.Name);
+                    }
+                    //-------------------atribuir role ao user------------------------------
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

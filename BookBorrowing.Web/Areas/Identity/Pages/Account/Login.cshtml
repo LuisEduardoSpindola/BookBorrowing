@@ -6,7 +6,7 @@
 }
 <div class="container">
     <br></br><br></br>
-    <div class="justify-content-center row col-sm w-50 mx-auto">
+    <div class="justify-content-center row col-sm w-50 mx-auto gradient-border" id="box">
         <div class="card-body bg-dark border border-primary ">
             <main>
                 <div class="card-header text-center"><h2 class="fw-light">Login</h2></div>
@@ -41,6 +41,47 @@
         </div>
     </div>
 </div>
+
+<style>
+
+    /*Card*/
+
+
+    .gradient-border {
+        --borderWidth: 2px;
+        position: relative;
+        border-radius: var(--borderWidth);
+    }
+
+        .gradient-border:after {
+            content: '';
+            position: absolute;
+            top: calc(-1 * var(--borderWidth));
+            left: calc(-1 * var(--borderWidth));
+            height: calc(100% + var(--borderWidth) * 2);
+            width: calc(100% + var(--borderWidth) * 2);
+            background: linear-gradient(60deg, #7eb5d6, #649ebe, #4a87a6, #2f708e, #155976, #1098ad, #07b39b, #2f708e);
+            border-radius: calc(2 * var(--borderWidth));
+            z-index: -1;
+            animation: animatedgradient 3s ease alternate infinite;
+            background-size: 300% 300%;
+        }
+
+
+    @@keyframes animatedgradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

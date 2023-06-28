@@ -10,5 +10,6 @@ namespace BookBorrowing.Web.Areas.Identity.Data;
 public class Library : IdentityUser
 {
     public string Name { get; set; }
+
 }
 

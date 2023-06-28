@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
+
 namespace BookBorrowing.Web.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
@@ -115,7 +116,8 @@ namespace BookBorrowing.Web.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    //await new LibraryService().Login(HttpContext, user);
+                    _logger.LogInformation("Usuário Logado");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -129,6 +131,7 @@ namespace BookBorrowing.Web.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    //await new LibraryService().Logout(HttpContext);
                     ModelState.AddModelError(string.Empty, "Login Inválido!");
                     return Page();
                 }

@@ -1,5 +1,7 @@
 ﻿using BookBorrowing.DATA.Models;
 using BookBorrowing.DATA.Service;
+using BookBorrowing.Web.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookBorrowing.Web.Controllers
@@ -23,6 +25,8 @@ namespace BookBorrowing.Web.Controllers
         }
 
         //List
+
+        [Authorize(Roles = Roles.Library)]
         public  IActionResult List() 
         {
             List<Book> _BookList = _BookService._RepositoryBook.GetAll();

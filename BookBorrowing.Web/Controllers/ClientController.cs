@@ -1,5 +1,7 @@
 ﻿using BookBorrowing.DATA.Models;
 using BookBorrowing.DATA.Service;
+using BookBorrowing.Web.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookBorrowing.Web.Controllers
@@ -30,6 +32,7 @@ namespace BookBorrowing.Web.Controllers
 
         // List 
 
+        [Authorize(Roles = Roles.Library)]
         public IActionResult List() 
         {
             List<Client> ClientList = _ClientService._RepositoryClient.GetAll();
@@ -59,12 +62,5 @@ namespace BookBorrowing.Web.Controllers
             return RedirectToAction("List");
         }
 
-        // Details
-
-        public IActionResult Details(int id) 
-        {
-            Client _ClientDetails = _ClientService._RepositoryClient.GetById(id);
-            return View(_ClientDetails); 
-        }
     }
 }
