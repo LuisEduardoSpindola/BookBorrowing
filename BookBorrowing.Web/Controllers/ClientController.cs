@@ -25,6 +25,12 @@ namespace BookBorrowing.Web.Controllers
                 return View();
             }
 
+            ClientInput.ClientName = ClientInput.ClientName.Trim();
+            ClientInput.ClientCpf = ClientInput.ClientCpf.Trim();
+            ClientInput.Adress = ClientInput.Adress.Trim();
+            ClientInput.City = ClientInput.City.Trim();
+            ClientInput.CellNumber = ClientInput.CellNumber.Trim();
+
             _ClientService._RepositoryClient.Create(ClientInput);
 
             return RedirectToAction("List");
@@ -43,7 +49,15 @@ namespace BookBorrowing.Web.Controllers
 
         public IActionResult Edit(int id) 
         {
+
             Client ClientEdit = _ClientService._RepositoryClient.GetById(id);
+
+            ClientEdit.ClientName = ClientEdit.ClientName.Trim();
+            ClientEdit.ClientCpf = ClientEdit.ClientCpf.Trim();
+            ClientEdit.Adress = ClientEdit.Adress.Trim();
+            ClientEdit.City = ClientEdit.City.Trim();
+            ClientEdit.CellNumber = ClientEdit.CellNumber.Trim();
+
             return View(ClientEdit);
         }
 

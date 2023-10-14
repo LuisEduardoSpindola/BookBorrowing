@@ -10,10 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("IdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityDbContextConnection' not found.");
 
 builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddScoped<RoleManager<IdentityRole>>(); // Adicione esta linha para registrar o RoleManager<IdentityRole>
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddDefaultIdentity<Library>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<IdentityDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 6;
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

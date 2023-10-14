@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Services\**" />
+    <Content Remove="Controllers\Services\**" />
+    <EmbeddedResource Remove="Controllers\Services\**" />
+    <None Remove="Controllers\Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
@@ -25,10 +32,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookBorrowing.DATA\BookBorrowing.DATA.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Services\" />
   </ItemGroup>
 
 </Project>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookBorrowing.DATA.Migrations
 {
     [DbContext(typeof(BookBorrowingContext))]
-    [Migration("20230508155736_BookBorrowing")]
-    partial class BookBorrowing
+    [Migration("20230917161428_MigrationBase")]
+    partial class MigrationBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,15 +35,15 @@ namespace BookBorrowing.DATA.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBook"));
 
                     b.Property<string>("AuthorName")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nchar(150)")
                         .HasColumnName("authorName")
                         .IsFixedLength();
 
                     b.Property<string>("BookEdition")
-                        .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("char(30)")
                         .HasColumnName("bookEdition")
                         .IsFixedLength();
 
@@ -53,23 +53,24 @@ namespace BookBorrowing.DATA.Migrations
                         .HasColumnName("bookImg");
 
                     b.Property<string>("BookName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nchar(100)")
                         .HasColumnName("bookName")
                         .IsFixedLength();
 
-                    b.Property<DateTime>("PublishDate")
+                    b.Property<DateTime?>("PublisherDate")
                         .HasColumnType("date")
-                        .HasColumnName("publishDate");
+                        .HasColumnName("publisherDate");
 
                     b.Property<string>("PublisherName")
-                        .HasMaxLength(150)
-                        .HasColumnType("nchar(150)")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nchar(10)")
                         .HasColumnName("publisherName")
                         .IsFixedLength();
 
-                    b.HasKey("IdBook");
+                    b.HasKey("IdBook")
+                        .HasName("PK_Book_1");
 
                     b.ToTable("Book");
                 });
@@ -83,13 +84,6 @@ namespace BookBorrowing.DATA.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBorrowing"));
 
-                    b.Property<string>("BorrowingAdress")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nchar(100)")
-                        .HasColumnName("borrowingAdress")
-                        .IsFixedLength();
-
                     b.Property<DateTime>("BorrowingDate")
                         .HasColumnType("datetime")
                         .HasColumnName("borrowingDate");
@@ -98,19 +92,20 @@ namespace BookBorrowing.DATA.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("devolutionDate");
 
-                    b.Property<int>("IdBook")
+                    b.Property<int>("IdBorrowingBook")
                         .HasColumnType("int")
-                        .HasColumnName("idBook");
+                        .HasColumnName("idBorrowingBook");
 
-                    b.Property<int>("IdClient")
+                    b.Property<int>("IdBorrowingClient")
                         .HasColumnType("int")
-                        .HasColumnName("idClient");
+                        .HasColumnName("idBorrowingClient");
 
-                    b.HasKey("IdBorrowing");
+                    b.Property<bool>("Returned")
+                        .HasColumnType("bit")
+                        .HasColumnName("returned");
 
-                    b.HasIndex("IdBook");
-
-                    b.HasIndex("IdClient");
+                    b.HasKey("IdBorrowing")
+                        .HasName("PK_Borrowing_1");
 
                     b.ToTable("Borrowing");
                 });
@@ -159,38 +154,61 @@ namespace BookBorrowing.DATA.Migrations
                         .HasColumnName("clientName")
                         .IsFixedLength();
 
-                    b.HasKey("IdClient");
+                    b.HasKey("IdClient")
+                        .HasName("PK_Client_1");
 
                     b.ToTable("Client");
                 });
 
-            modelBuilder.Entity("BookBorrowing.DATA.Models.Borrowing", b =>
+            modelBuilder.Entity("BookBorrowing.DATA.Models.ViewBorrowing", b =>
                 {
-                    b.HasOne("BookBorrowing.DATA.Models.Book", "IdBookNavigation")
-                        .WithMany("Borrowing")
-                        .HasForeignKey("IdBook")
+                    b.Property<string>("BookName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nchar(100)")
+                        .HasColumnName("bookName")
+                        .IsFixedLength();
+
+                    b.Property<DateTime>("BorrowingDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("borrowingDate");
+
+                    b.Property<string>("ClientCpf")
                         .IsRequired()
-                        .HasConstraintName("FK_Borrowing_Book");
+                        .HasMaxLength(14)
+                        .HasColumnType("nchar(14)")
+                        .HasColumnName("clientCPF")
+                        .IsFixedLength();
 
-                    b.HasOne("BookBorrowing.DATA.Models.Client", "IdClientNavigation")
-                        .WithMany("Borrowing")
-                        .HasForeignKey("IdClient")
+                    b.Property<string>("ClientName")
                         .IsRequired()
-                        .HasConstraintName("FK_Borrowing_Client");
+                        .HasMaxLength(150)
+                        .HasColumnType("nchar(150)")
+                        .HasColumnName("clientName")
+                        .IsFixedLength();
 
-                    b.Navigation("IdBookNavigation");
+                    b.Property<DateTime>("DevolutionDate")
+                        .HasColumnType("datetime")
+                        .HasColumnName("devolutionDate");
 
-                    b.Navigation("IdClientNavigation");
-                });
+                    b.Property<int>("IdBorrowing")
+                        .HasColumnType("int")
+                        .HasColumnName("idBorrowing");
 
-            modelBuilder.Entity("BookBorrowing.DATA.Models.Book", b =>
-                {
-                    b.Navigation("Borrowing");
-                });
+                    b.Property<int>("IdBorrowingBook")
+                        .HasColumnType("int")
+                        .HasColumnName("idBorrowingBook");
 
-            modelBuilder.Entity("BookBorrowing.DATA.Models.Client", b =>
-                {
-                    b.Navigation("Borrowing");
+                    b.Property<int>("IdBorrowingClient")
+                        .HasColumnType("int")
+                        .HasColumnName("idBorrowingClient");
+
+                    b.Property<bool>("Returned")
+                        .HasColumnType("bit")
+                        .HasColumnName("returned");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("ViewBorrowing", (string)null);
                 });
 #pragma warning restore 612, 618
         }

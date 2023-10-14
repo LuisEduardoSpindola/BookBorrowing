@@ -18,9 +18,20 @@ namespace BookBorrowing.Web.Controllers
         }
 
         [HttpPost]
-        public  IActionResult Create(Book BookAttribute) 
+        public IActionResult Create(Book book)
         {
-            Book _BookAttribute = _BookService._RepositoryBook.Create(BookAttribute);
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            book.BookName = book.BookName.Trim();
+            book.AuthorName = book.AuthorName.Trim();
+            book.PublisherName = book.PublisherName.Trim();
+            book.BookEdition = book.BookEdition.Trim();
+            book.BookImg = book.BookImg.Trim();
+
+            _BookService._RepositoryBook.Create(book);
             return RedirectToAction("List");
         }
 
@@ -41,10 +52,16 @@ namespace BookBorrowing.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Book BookInput) 
+        public IActionResult Edit(Book book)
         {
-            _BookService._RepositoryBook.Update(BookInput);
-            return RedirectToAction("List", new { });
+            book.BookName = book.BookName.Trim();
+            book.AuthorName = book.AuthorName.Trim();
+            book.PublisherName = book.PublisherName.Trim();
+            book.BookEdition = book.BookEdition.Trim();
+            book.BookImg = book.BookImg.Trim();
+
+            _BookService._RepositoryBook.Update(book);
+            return RedirectToAction("List");
         }
 
         //Delete
