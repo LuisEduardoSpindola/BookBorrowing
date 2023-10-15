@@ -33,5 +33,7 @@ namespace BookBorrowing.DATA.Models
         [Column("cellNumber")]
         [StringLength(14)]
         public string CellNumber { get; set; }
+        [StringLength(450)]
+        public string IdLibrary { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using BookBorrowing.DATA.Service;
 using BookBorrowing.Web.Constants;
 using BookBorrowing.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookBorrowing.Web.Controllers
@@ -10,15 +11,31 @@ namespace BookBorrowing.Web.Controllers
     public class BorrowingController : Controller
     {
         private ViewBorrowingService _BorrowingService = new ViewBorrowingService();
-        
+        private UserManager<Areas.Identity.Data.Library> _userManager;
+
+        public BorrowingController(UserManager<Areas.Identity.Data.Library> userManager)
+        {
+            _userManager = userManager;
+        }
 
         //Create
-        public IActionResult Create() 
+        public IActionResult Create()
         {
             BorrowingViewModel _BorrowingViewModel = new BorrowingViewModel();
-            List<Book> _BookList = _BorrowingService._RepositoryBook.GetAll();
-            List<Client> _ClientList = _BorrowingService._RepositoryClient.GetAll();
 
+            var user = _userManager.GetUserAsync(User).Result;
+            string sessionLibraryId = user.Id.ToString();
+
+            // Filtrar a lista de clientes e livros com base no IdLibrary
+            List<Client> _ClientList = _BorrowingService._RepositoryClient
+                .GetAll()
+                .Where(c => c.IdLibrary == sessionLibraryId)
+                .ToList();
+
+            List<Book> _BookList = _BorrowingService._RepositoryBook
+                .GetAll()
+                .Where(b => b.IdLibrary == sessionLibraryId)
+                .ToList();
 
             _BorrowingViewModel._ClientList = _ClientList;
             _BorrowingViewModel._BookList = _BookList;
@@ -26,6 +43,13 @@ namespace BookBorrowing.Web.Controllers
             _BorrowingViewModel._Borrowing = new Borrowing();
             _BorrowingViewModel._Borrowing.BorrowingDate = DateTime.Now;
             _BorrowingViewModel._Borrowing.DevolutionDate = DateTime.Now.AddDays(7);
+
+            _BorrowingViewModel._Client = new Client();
+            _BorrowingViewModel._Book = new Book();
+
+            _BorrowingViewModel._Client.IdLibrary = sessionLibraryId;
+            _BorrowingViewModel._Book.IdLibrary = sessionLibraryId;
+            _BorrowingViewModel._Borrowing.IdLibrary = sessionLibraryId;
 
             return View(_BorrowingViewModel);
         }

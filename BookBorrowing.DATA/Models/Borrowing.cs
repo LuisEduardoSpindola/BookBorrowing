@@ -23,5 +23,7 @@ namespace BookBorrowing.DATA.Models
         public DateTime DevolutionDate { get; set; }
         [Column("returned")]
         public bool Returned { get; set; }
+        [StringLength(450)]
+        public string IdLibrary { get; set; }
     }
 }

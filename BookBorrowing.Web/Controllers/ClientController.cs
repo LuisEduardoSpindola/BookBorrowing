@@ -1,15 +1,25 @@
 ﻿using BookBorrowing.DATA.Models;
 using BookBorrowing.DATA.Service;
+using BookBorrowing.Web.Areas.Identity.Data;
 using BookBorrowing.Web.Constants;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.LibraryModel;
+using BookBorrowing.Web.Areas.Identity.Data;
 
 namespace BookBorrowing.Web.Controllers
 {
     public class ClientController : Controller
     {
         private ClientService _ClientService = new ClientService();
+        private readonly UserManager<Areas.Identity.Data.Library> _userManager;
 
+
+        public ClientController(UserManager<Areas.Identity.Data.Library> userManager)
+        {
+            _userManager = userManager;
+        }
 
         // Create
         public IActionResult Create() 
@@ -18,7 +28,7 @@ namespace BookBorrowing.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Client ClientInput) 
+        public IActionResult Create(Client ClientInput)
         {
             if (!ModelState.IsValid)
             {
@@ -31,19 +41,29 @@ namespace BookBorrowing.Web.Controllers
             ClientInput.City = ClientInput.City.Trim();
             ClientInput.CellNumber = ClientInput.CellNumber.Trim();
 
+            var user = _userManager.GetUserAsync(User).Result;
+            string sessionLibraryId = user.Id.ToString();
+
+            ClientInput.IdLibrary = sessionLibraryId;
+
             _ClientService._RepositoryClient.Create(ClientInput);
 
             return RedirectToAction("List");
         }
 
+
         // List 
 
         [Authorize(Roles = Roles.Library)]
-        public IActionResult List() 
+        public IActionResult List()
         {
-            List<Client> ClientList = _ClientService._RepositoryClient.GetAll();
+            var user = _userManager.GetUserAsync(User).Result;
+            string sessionLibraryId = user.Id;
+
+            List<Client> ClientList = _ClientService._RepositoryClient.GetAll().Where(c => c.IdLibrary == sessionLibraryId).ToList();
             return View(ClientList);
         }
+
 
         // Edit
 
@@ -57,6 +77,11 @@ namespace BookBorrowing.Web.Controllers
             ClientEdit.Adress = ClientEdit.Adress.Trim();
             ClientEdit.City = ClientEdit.City.Trim();
             ClientEdit.CellNumber = ClientEdit.CellNumber.Trim();
+
+            var user = _userManager.GetUserAsync(User).Result;
+            string sessionLibraryId = user.Id.ToString();
+
+            ClientEdit.IdLibrary = sessionLibraryId;
 
             return View(ClientEdit);
         }

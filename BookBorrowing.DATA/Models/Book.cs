@@ -32,5 +32,7 @@ namespace BookBorrowing.DATA.Models
         [Column("bookImg")]
         [Unicode(false)]
         public string BookImg { get; set; }
+        [StringLength(450)]
+        public string IdLibrary { get; set; }
     }
 }
